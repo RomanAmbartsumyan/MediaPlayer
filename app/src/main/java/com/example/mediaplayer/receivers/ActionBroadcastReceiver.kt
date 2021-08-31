@@ -69,6 +69,11 @@ class ActionBroadcastReceiver : BroadcastReceiver() {
                     mediaPlayer.isLooping = isLoop
                 }
             }
+            MusicNotification.RANDOM_TRACK -> {
+                position = (0 until tracks.size).random()
+                val track = tracks[position]
+                MusicNotification.showMusicNotification(context, track, isPlaying)
+            }
         }
         mediaPlayer.setOnCompletionListener {
             isPlaying = false
