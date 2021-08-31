@@ -1,0 +1,68 @@
+package com.example.mediaplayer.notifications
+
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.graphics.BitmapFactory
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.example.mediaplayer.R
+import com.example.mediaplayer.objects.Track
+import com.example.mediaplayer.receivers.MusicBroadcastReceiver
+
+object MusicNotification {
+    const val TRACK = "track"
+    const val MUSIC = "music"
+    const val ACTION_LIST = "action_list"
+    const val PLAY_PAUSE = "play_pause"
+    const val PREVIOUS = "previous"
+    const val REPEAT = "repeat"
+    const val NEXT = "next"
+    const val RANDOM_TRACK = "random_track"
+    const val ACTION_NAME = "action_name"
+    private const val NOTIFICATION_ID = 1
+
+    fun showMusicNotification(context: Context, track: Track, isPlaying: Boolean) {
+        val pendingNextIntent = getPendingIntent(context, NEXT, track)
+        val pendingPlayPauseIntent = getPendingIntent(context, PLAY_PAUSE, track)
+        val pendingPreviousIntent = getPendingIntent(context, PREVIOUS, track)
+        val pendingRepeatIntent = getPendingIntent(context, REPEAT, track)
+
+        val iconImage = if (isPlaying) {
+            R.drawable.ic_pause
+        } else {
+            R.drawable.ic_play
+        }
+
+        val icon = BitmapFactory.decodeResource(context.resources, track.icon)
+
+        val notification =
+            NotificationCompat.Builder(context, NotificationChannels.MUSIC_CHANNEL_ID)
+                .setOnlyAlertOnce(true)
+                .setOngoing(true)
+                .setContentTitle(track.artist)
+                .setContentText(track.name)
+                .setLargeIcon(icon)
+                .addAction(R.drawable.ic_repeat, REPEAT, pendingRepeatIntent)
+                .addAction(R.drawable.ic_previous, PREVIOUS, pendingPreviousIntent)
+                .addAction(iconImage, PLAY_PAUSE, pendingPlayPauseIntent)
+                .addAction(R.drawable.ic_next, NEXT, pendingNextIntent)
+                .addAction(R.drawable.ic_random, RANDOM_TRACK, null)
+                .setStyle(
+                    androidx.media.app.NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(1, 2, 3)
+                )
+                .setSmallIcon(R.drawable.ic_music)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .build()
+
+        NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
+    }
+
+    private fun getPendingIntent(context: Context, action: String, track: Track): PendingIntent {
+        val intent = Intent(context, MusicBroadcastReceiver::class.java)
+            .setAction(action)
+            .putExtra(TRACK, track)
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+}

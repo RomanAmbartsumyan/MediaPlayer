@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MediaPlayer</string>
+    <string name="work_with_notification">Work with notification</string>
 </resources>
