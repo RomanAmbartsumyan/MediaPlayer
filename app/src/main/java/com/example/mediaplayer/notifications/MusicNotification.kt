@@ -13,13 +13,11 @@ import com.example.mediaplayer.receivers.MusicBroadcastReceiver
 
 object MusicNotification {
     const val TRACK = "track"
-    const val ACTION_LIST = "action_list"
     const val PLAY_PAUSE = "play_pause"
     const val PREVIOUS = "previous"
     const val REPEAT = "repeat"
     const val NEXT = "next"
     const val RANDOM_TRACK = "random_track"
-    const val ACTION_NAME = "action_name"
     const val NOTIFICATION_ID = 1
 
     fun showMusicNotification(context: Context, track: Track, isPlaying: Boolean) {

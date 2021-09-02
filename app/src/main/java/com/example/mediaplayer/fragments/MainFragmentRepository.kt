@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import com.example.mediaplayer.MusicService
-import com.example.mediaplayer.notifications.MusicNotification
 import com.example.mediaplayer.receivers.ActionBroadcastReceiver
+import com.example.mediaplayer.receivers.ReceiverUtils
+import com.example.mediaplayer.service.MusicService
 
 class MainFragmentRepository(private val context: Context) {
     private val actionReceiver: BroadcastReceiver = ActionBroadcastReceiver()
@@ -16,7 +16,7 @@ class MainFragmentRepository(private val context: Context) {
         context.startService(service)
         context.registerReceiver(
             actionReceiver,
-            IntentFilter(MusicNotification.ACTION_LIST)
+            IntentFilter(ReceiverUtils.ACTION_LIST)
         )
     }
 

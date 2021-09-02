@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
-import com.example.mediaplayer.R
 import com.example.mediaplayer.notifications.MusicNotification
 import com.example.mediaplayer.objects.Track
+import com.example.mediaplayer.objects.Tracks
 
 class ActionBroadcastReceiver : BroadcastReceiver() {
     private var isPlaying = false
@@ -15,14 +15,11 @@ class ActionBroadcastReceiver : BroadcastReceiver() {
     private var isLoop = false
     private var position = 0
 
-    private val tracks =
-        arrayListOf(
-            Track("Artist1", "track1", R.drawable.t1, R.raw.track),
-            Track("Artist2", "track2", R.drawable.t2, R.raw.track2),
-        )
+    private val tracks = Tracks.trackList
+
 
     override fun onReceive(context: Context, intent: Intent) {
-        val action = intent.extras?.getString(MusicNotification.ACTION_NAME)
+        val action = intent.extras?.getString(ReceiverUtils.ACTION_NAME)
 
         val trackFromIntent = intent.extras?.getParcelable<Track>(MusicNotification.TRACK)!!
 

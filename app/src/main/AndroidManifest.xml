@@ -26,7 +26,7 @@
             </intent-filter>
         </receiver>
         <service
-            android:name=".MusicService"
+            android:name=".service.MusicService"
             android:exported="false" />
     </application>
 

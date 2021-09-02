@@ -9,8 +9,8 @@ import com.example.mediaplayer.objects.Track
 class MusicBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.sendBroadcast(
-            Intent(MusicNotification.ACTION_LIST)
-                .putExtra(MusicNotification.ACTION_NAME, intent?.action)
+            Intent(ReceiverUtils.ACTION_LIST)
+                .putExtra(ReceiverUtils.ACTION_NAME, intent?.action)
                 .putExtra(
                     MusicNotification.TRACK, intent?.extras?.getParcelable<Track>(
                         MusicNotification.TRACK
